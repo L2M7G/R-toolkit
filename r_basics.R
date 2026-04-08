@@ -1,5 +1,6 @@
-#### Notes on the basics of R code ####
+##### Notes on the basics of R code #####
 
+#### The following section is based on Data Camp's Into to R ####
 ### Data Types ###
 
 # Check data type
@@ -137,6 +138,215 @@ my_list[[1]][1]   # select the first component from the first element
 my_list[["name"]]  # select the name element from the list
 my_list$name   # select the name element from the list
 
+#### End of Intro to R ####
 
-##### End of Intro to R #####
 
+
+
+#### The following section is based on Data Camp's Intermediate R
+
+### Conditionals and Control FLow ###
+
+## Relational Operators (==, !=, <, >, <=, >=)
+# Greater than relationships determined alphabetically for strings
+
+# Can use on vectors
+vector_name <- c(3,5,7,9)
+vector < 6     # will return TRUE, TRUE, FALSE, FALSE - check each component
+
+# Can compare vectors
+new_vector_name <- c(8,6,4,2)
+new_vector_name >= vector_name     # will return TRUE, TRUE, FALSE, FALSE - compare every element of the vectors
+
+# Operators also work for matrices 
+
+
+## Logical Operators   (&, | (or), ! (not))
+
+TRUE & TRUE # returns TRUE
+TRUE & FALSE # returns FALSE
+
+TRUE | TRUE # returns TRUE
+TRUE | FALSE # returns TRUE
+FALSE | FALSE # returns FALSE
+
+!TRUE # returns FALSE
+!FALSE # returns TRUE
+
+x <- 10
+x > 6 & x < 14 # returns TRUE - cannot do 6 < x < 14
+
+y <- 10
+y < 12 | y > 15 # return TRUE
+y < 8 | y > 17 # return FALSE
+
+# Vectors 
+c(TRUE, FALSE, TRUE) & c(FALSE, FALSE, TRUE) # returns FALSE, FALSE, TRUE
+c(TRUE, FALSE, TRUE) | c(FALSE, FALSE, TRUE) # returns TRUE, FALSE, TRUE
+!C(TRUE, FALSE, TRUE) # returns FALSE, TRUE, FALSE
+
+c(TRUE, FALSE, TRUE) && c(FALSE, FALSE, TRUE) # returns FALSE
+c(TRUE, FALSE, TRUE) || c(FALSE, FALSE, TRUE) # returns TRUE
+# double operators only look at first component 
+
+
+## Conditional Statements (if, else)
+
+# if statements
+if(condition) {
+  action
+}
+
+x <- 7
+if(x < 0) {
+  print("x is a negative number")
+}
+
+# else statements
+if(condition) {
+  action1
+} else{
+  action2
+}
+
+x <- 7
+if(x < 0) {
+  print("x is a negative number")
+} else {
+  print("x is a positive number")
+}
+
+# else if statements
+if(condition1) {
+  action1
+} else if(condition2) {
+  action2
+} else {
+  action3
+}
+
+x <- 0
+if(x < 0) {
+  print("x is a negative number")
+} else if(x == 0) {
+  print("x is zero")
+} else {
+  print("x is a positive number")
+}
+
+
+### Loops ###
+
+## While Loop (vs if, will continue running as long as condition is true)
+while(condition) {
+  action
+}
+
+age <- 0
+while(age <= 10) {
+  print(paste("age is reported as", age))
+  age <- age + 1    # will increment the variable
+}      # will print out statement starting at initial age until the condition, otherwise will print with initial value indefinitely, can also subtract values and set a condition for the minimum
+
+age <- 100
+while(age >= 40) {
+  print(paste("Your age is", age))
+  if (age >= 65){
+    print(paste("at", age, "years old, you are a senior"))
+    age <- age - 1
+  } else {
+    print(paste("at", age, "years old, you are middle aged"))
+    age <- age - 1
+  }
+}
+
+# to stop loop at a certain point add:
+  if (age > 70) {
+    break
+  }
+
+## For loops
+for(variable_name in defined_sequence) {
+  action
+}
+
+countries <- c("Canada", "USA", "Mexico", "Guatemala", "Belize", "Honduras", "Nicaragua", "Costa Rica", "Panama")
+
+for (country in countries) {
+  print(country)
+}    # creates a separate print out for each object in the vector
+
+# Can do the same for other structures
+
+# Break statement
+countries <- list("Canada", "USA", "Mexico", "Guatemala", "Belize", "Honduras", "Nicaragua", "Costa Rica", "Panama")
+
+for (country in countries) {
+  if(nchar(country) == 8) {
+    break  
+  }   # stop loop when get to a country name with 8 characters
+  print(country)
+} 
+
+# next statement
+countries <- list("Canada", "USA", "Mexico", "Guatemala", "Belize", "Honduras", "Nicaragua", "Costa Rica", "Panama")
+
+for (country in countries) {
+  if(nchar(country) == 9) {
+    next  
+  }   # skip any countries with 8 characters in name 
+  print(country)
+} 
+
+# Alternative version
+countries <- c("Canada", "USA", "Mexico", "Guatemala", "Belize", "Honduras", "Nicaragua", "Costa Rica", "Panama")
+
+for (i in 1:length(countries)) {
+  print(paste(countries[i], "is on position", i, "in the cities vector."))
+} 
+
+# Alternative version for lists (require [[]] instead of usual [])
+countries <- list("Canada", "USA", "Mexico", "Guatemala", "Belize", "Honduras", "Nicaragua", "Costa Rica", "Panama")
+
+for (i in 1:length(countries)) {
+  print(paste(countries[[i]], "is on position", i, "in the cities vector."))
+} 
+
+# Nested lopp (for lopp inside a for loop)
+for (variable1 in defined_sequence1) {
+  for (variable2 in defined_sequence2) {
+    action
+  }
+}
+
+# For a Matrix
+for (i in 1:nrow(matrix_name)) {   # i corresponds to the rows
+  for (j in 1:ncol(matrix_name)) {   # j corresponds to the columns
+    print(paste("On row", i, "and column", j, "the value is", matrix_name[i,j]))
+  }
+}
+
+# if and else in for loops, can also add break and next 
+for (ny in newyork) {
+  if (ny > 20) {
+    print("it is warm in New York today")
+    break
+  } else {
+    print("it is cool today")
+    next
+    }
+}
+
+
+
+### Functions ###
+
+###### Resume Here !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+### Apply Family
+
+
+### Utilities ###
+
+
+##### END OF BASIC R CODE NOTES #####
