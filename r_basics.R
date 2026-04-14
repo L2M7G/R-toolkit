@@ -341,12 +341,338 @@ for (ny in newyork) {
 
 ### Functions ###
 
-###### Resume Here !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+# to see full arguments of a function without reading through help - args()
+args(sd)
+
+# for more detail
+?sd
+help(sd)
+
+sd_results <- sd(c(3,5,2,8,1))
+info <- c(3,5,2,8,1)
+sd(info)
+sd(x = info)
+
+info_na <- c(3,5,2,8,1,NA)
+sd(info_na, TRUE) # removes NA 
+
+list()
+print()
+
+sd()
+mean(a+b)
+sample()
+abs(a-b)
+sum()
+diff()
+
+
+## Writing R functions
+
+function_name <- function(argument1, argument2) {
+  body
+}
+
+quadruple <- function(x) {
+  x*4
+}
+quadruple(10)
+
+# With return statements
+quadruple <- function(x) {
+  y <- x*4
+  return(y)
+}
+quadruple(5)
+
+math <- function(a, b) {
+  a*(a+b)/b*(a-b)
+}
+math(4, 6)
+
+math <- function(a, b = 1) {    # makes b optional by setting a default
+  a*(a+b)/b*(a-b)
+}
+math(4)
+
+math <- function(a, b = 1) {    # makes b optional by setting a default
+  if (b == 0){
+    return(0)      # guard fundtion by specifying return 0 if argument is 0,or else function returns inf
+  }
+    a*(a+b)/b*(a-b)
+}
+math(4, 0)
+
+# functions can contain loops and conditionals
+
+# Anonymous functions
+named_function <- function(x) {x/2}
+# vs
+function(x) {x/2}
+
+
+
+## R Packages
+# base (contains things like mean)
+# ggvis (data visualization)
+# ggplot2
+
+# install packages
+install.packages()
+install.packages("ggvis")
+search()
+
+# load packages into the search list (so they can be used)
+library()
+library("ggvis")
+search()
+
+
 
 ### Apply Family
 
+# lapply()  - apply function over list or vector, output is a list
+# sapply() - apply function over list or vector, output tries to simplify to an array
+# vapply() - apply funciton over list or vector, output is explicitly specified
+
+## lapply() - apply a function over all list elements, or a function
+
+# Always returns a list
+# Takes a vector or list and applies a function to each element
+city <- list(pop = 1973693, neighborhoods = c("1","2","3","4", "5"), capital = TRUE)
+
+for(info in city) {
+  print(class(info))
+}
+
+# Instead
+lapply(city, class) # apply class to each list element
+
+
+countries <- c("Canada", "USA", "Mexico", "Guatemala", "Belize", "Honduras", "Nicaragua", "Costa Rica", "Panama")
+
+num_chars <- c()
+for(i in 1:length(countries)) {
+  num_chars[i] <- nchar(countries[i])
+}
+
+num_chars
+
+lapply(countries, nchar)
+unlist(lapply(countries, nchar))    # unlist() to get output as a vector
+
+list_name <- list(342, 645, 847, 498, 237)
+third <- function(x) {
+  x/3
+}
+list_3 <- lapply(list_name, third)
+unlist(list_3)
+
+divide <- function(x, factor) {
+  x/factor
+}
+list_f3 <- lapply(list_name, divide, factor = 3)
+unlist(list_f3)
+
+list_f6 <- lapply(list_name, divide, factor = 6)
+unlist(list_f6)
+
+# Anonymous functions - don't have to define the function separately if only using once - do it in lapply
+lapply(list(5,7,3,7,8), function(x) {x/2})
+
+# lapply with functions that require more than one argument
+divide <- function(x,factor) {
+  x/factor
+}
+lapply(list(5,7,3,7,8), divide, factor = 2)
+
+call_element <- function(x, index) {
+  x[index]
+}
+lapply(list(5,7,3,7,8), call_element, index = 5)
+
+
+## sapply() - simplify apply
+
+# Output is always simplified vector (same as unlist(apply())
+
+sapply(list_name, function, USE.NAMES = TRUE)   # TRUE by default
+
+countries <- c("Canada", "USA", "Mexico", "Guatemala", "Belize", "Honduras", "Nicaragua", "Costa Rica", "Panama")
+
+first_last <- function(country) {
+  country <- gsub(" ", "", country)
+  letters <- strsplit(name, split = "")[[1]]
+  c(first = min(letters, last = max(letters)))
+}
+
+# output is a matrix, but sometimes not always possible to simplify
+
+
+## vapply() - apply over list or vector, specify output format
+
+vapply(x, function, FUN.VALUE, ..., USE.NAMES = TRUE)
+
+countries <- c("Canada", "USA", "Mexico", "Guatemala", "Belize", "Honduras", "Nicaragua", "Costa Rica", "Panama")
+
+sapply(countries, nchar)
+vapply(countries, nchar, numeric(1))   # specify FUN.VALUE so that returnes numeric value of 1
+
+# Safer than sapply - have to think about what the function will return istead of relying on sapply to do it 
+
+
 
 ### Utilities ###
+
+## Useful Functions
+
+sapply()
+lapply()
+vapply()
+
+sort()
+print()
+identical()
+
+# Mathematical utilities
+mean()    # calculates numerical mean
+sum()     # adds the vector elements together
+diff()    # difference the elements 
+rount()   # rounds the values
+abs()     # absolute value
+
+# Functions for data structures
+seq()     # generates a sequence of numbers, indicate (start, stop, by = ??)
+rep()     # replicates the input, indicate how may times (sequence, times = ??)
+sort()    # sorts the input, default increasing, can indicate (decreasing = TRUE)
+str()     # view structure of any R object
+
+is.list()   # check if list, or other *
+is.*()
+
+as.list()    # convert to a list, or other *
+as.*()
+
+unlist()    # unlists and returns as a vector, tried to assign names for vector elements, can use to convert a list to a vector
+
+append()    # add elements to a vector or list
+rev()       # reverses the order of the elements in a data structure 
+
+
+## Regular Expressions
+
+# check for patters, replace , extract
+# used when cleaning data
+
+
+# grepl()
+
+# returns logical
+
+grepl(pattern = <regex>, x=<string>)
+
+countries <- c("Canada", "United States", "Mexico", "Guatemala", "Belize", "Honduras", "Nicaragua", "Costa Rica", "Panama")
+
+grepl(pattern = "e", x = countries)     # look for countries with the letter e
+
+grepl(patter = "^C", x = countries)     # look for countries that start with c (case sensitive)
+
+grepl(pattern = "a$", x= countries)     # look for countries that end with a
+
+# Find more with $regex 
+
+
+# grep()
+
+# returns positions (2,5,5,etc) aka indicies
+grep(pattern = <regex>, x=<string>)
+
+countries <- c("Canada", "United States", "Mexico", "Guatemala", "Belize", "Honduras", "Nicaragua", "Costa Rica", "Panama")
+
+grep(pattern = "e", x = countries)
+
+
+# sub() - only looks for the first element that matches (if two e, will only replace the first one)
+
+sub(pattern = <regex>, replacement = <str>, x = <sub>)
+
+countries <- c("Canada", "United States", "Mexico", "Guatemala", "Belize", "Honduras", "Nicaragua", "Costa Rica", "Panama")
+
+sub(pattern = "e", replacement = "x", x = countries)
+
+#gsub() - replace all that match
+
+gsub(pattern = "e", replacement = "x", x = countries)
+
+# can use | as or
+gsub(pattern = "e|a|i", repl
+     acement = "x", x = countries)
+
+
+## Times and Dates   (default: "YYYY-MM-DD")
+
+today <- Sys.Date()    
+today
+class(today)
+
+time_date <- Sys.time()
+time_date
+class(time_date)
+
+# Class something as a date
+date <- as.Date("1999-07-10")
+class(date)
+
+date <- as.Date("1999-27-07")  # does not work 
+date <- as.Date("1999-27-07", format = "%Y-%d-%m")
+date   # now recognizes the date, and prints in the default format
+
+time <- as.POSIXct("1999-07-10 17:12:56")
+time
+
+# Can do calculations with dates and times
+today + 1   # today defined above, result is next calendar day
+
+date1 <- as.Date("1985-07-13")
+date2 <- as.Date("2026-07-13")
+date2 - date1   # result is in days
+
+time1 <- as.POSIXct("1999-07-10 17:12:56")
+time2 <- as.POSIXct("1999-07-10 21:19:56")
+time2 - time1
+
+
+# Counts dates from 1 January 1970 midnight
+unclass(date)  # result is number of days since 1970
+
+# Packages
+# lubridate
+# zoo
+# xts
+
+# as.Date()
+
+#  %Y   - 4 digit year (1984)
+#  %y   - 2 digit year (84)
+#  %m   - 2 digit month
+#  %d   - 2 digit day
+#  %A   - weekday (Monday)
+#  %a   - abbreviated weekday (Mon)
+#  %B   - month (September)
+#  %b   - abbreviated month (Sept)
+
+
+# as.POSIXct()
+
+#  %H   - hours as a decimal 24 hr (00-23)
+#  %I   - hours as a decimal number 12 hr (01-12)
+#  %M   - minutes as a decimal number
+#  %S   - seconds as a decimal number
+#  %T   - shorthand for typical %H:%M:%S
+#  %p   - AM/PM
+
+# Uses for Dates and Times
+# can difference the dates and time to find the time spent doing things or between things, can average the time, can sum the time, etc 
 
 
 ##### END OF BASIC R CODE NOTES #####
